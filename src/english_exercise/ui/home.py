@@ -1,6 +1,5 @@
 """主菜单窗口：提供 Spoken 与 Type Type 两个练习入口。"""
 
-import os
 import tkinter as tk
 import tkinter.messagebox as messagebox
 import traceback
@@ -9,7 +8,6 @@ from pathlib import Path
 import customtkinter as ctk
 
 from ..audio import AudioPlayer
-from ..paths import BOOKS_DIR
 from ..progress import load_progress
 from ..settings import DEEPL, ensure_config, get_api_key, get_voice
 from ..text import load_book, split_sentences
@@ -22,7 +20,7 @@ from .typing import TypingWindow
 class HomeWindow(ctk.CTk):
     """英语学习软件的主界面。"""
 
-    WIDTH, HEIGHT = 900, 600
+    WIDTH, HEIGHT = 900, 520
 
     def __init__(self):
         """创建主界面窗口。"""
@@ -114,38 +112,6 @@ class HomeWindow(ctk.CTk):
             status="开始练习  →",
             command=self._open_picker,
         )
-
-        # ── 底部提示 ──
-        ctk.CTkFrame(root, fg_color="transparent", height=1).pack(
-            fill="both", expand=True
-        )
-
-        footer = ctk.CTkFrame(root, fg_color="transparent")
-        footer.pack(fill="x")
-
-        ctk.CTkLabel(
-            footer,
-            text="把 .txt 书籍放进 books 文件夹，Type Type 里就能看到它",
-            font=(Theme.FONT_UI, 11),
-            text_color=Theme.MUTED,
-            anchor="w",
-        ).pack(side="left")
-
-        self.btn_folder = ctk.CTkButton(
-            footer,
-            text="打开书籍文件夹",
-            width=112,
-            height=30,
-            corner_radius=9,
-            font=(Theme.FONT_UI, 11),
-            fg_color="transparent",
-            hover_color=Theme.BORDER,
-            border_width=1,
-            border_color=Theme.BORDER,
-            text_color=Theme.MUTED,
-            command=self._open_books_dir,
-        )
-        self.btn_folder.pack(side="right")
 
         # ── 轻提示（默认隐藏）──
         self._toast = ctk.CTkLabel(
@@ -258,7 +224,7 @@ class HomeWindow(ctk.CTk):
         if self._toast_after is not None:
             self.after_cancel(self._toast_after)
         self._toast.configure(text=text)
-        self._toast.place(relx=0.5, rely=1.0, anchor="s", y=-68)
+        self._toast.place(relx=0.5, rely=1.0, anchor="s", y=-26)
         self._toast.lift()
         self._toast_after = self.after(2400, self._hide_toast)
 
@@ -270,14 +236,6 @@ class HomeWindow(ctk.CTk):
     def _on_spoken(self):
         """Spoken 模式暂未实现，仅给出提示。"""
         self._show_toast("Spoken 模式正在开发中，敬请期待")
-
-    def _open_books_dir(self):
-        """用资源管理器打开 books 文件夹。"""
-        try:
-            BOOKS_DIR.mkdir(parents=True, exist_ok=True)
-            os.startfile(BOOKS_DIR)
-        except OSError as exc:
-            messagebox.showerror("无法打开文件夹", str(exc), parent=self)
 
     def _open_picker(self):
         """打开书目选择窗口。"""
