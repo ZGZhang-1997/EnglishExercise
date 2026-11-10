@@ -1,0 +1,48 @@
+[project]
+name = "english-exercise"
+version = "0.1.0"
+description = "英语学习桌面软件：主菜单 + TypeType 打字练习"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "customtkinter>=5.2.0,<6",
+    "deepl>=1.16.0",
+    "edge-tts>=6.1.0",
+    "nltk>=3.8.0",
+    "pygame>=2.5.0,<2.6",
+    "pyttsx3>=2.90",
+]
+
+[project.scripts]
+english-exercise = "english_exercise.main:main"
+
+[project.gui-scripts]
+english-exercise-gui = "english_exercise.main:main"
+
+[dependency-groups]
+dev = [
+    "pytest>=8.0",
+    "ruff>=0.6.0",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/english_exercise"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 88
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+ignore = ["E501"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["english_exercise"]
