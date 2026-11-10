@@ -115,11 +115,11 @@ uv run ruff check .  # 代码检查
 
 ## 依赖
 
-| 包 | 用途 |
-|---|---|
-| customtkinter | GUI 界面 |
-| pyttsx3 | 单词语音生成（wav） |
-| edge-tts | 句子语音生成（mp3） |
-| pygame | 音频播放 |
-| deepl | DeepL 翻译 API |
-| nltk | 英文分句 |
+| 包            | 用途                |
+| ------------- | ------------------- |
+| customtkinter | GUI 界面            |
+| pyttsx3       | 单词语音生成（wav） |
+| edge-tts      | 句子语音生成（mp3） |
+| pygame        | 音频播放            |
+| deepl         | DeepL 翻译 API      |
+| nltk          | 英文分句            |
